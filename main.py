@@ -2,11 +2,20 @@ from src.make_video import MakeVideo
 
 
 def main():
-    make_video = MakeVideo(
-        "media/Запись экрана от 2024-08-05 21-38-38.webm",
-        "media/audio_2024-08-05_21-42-10.ogg",
-        0,
-    ).run()
+    video = MakeVideo()
+    video.export_video("media/Видео.mp4")
+
+    audio = MakeVideo()
+    audio.export_audio("media/audio.ogg")
+    video.add_audio(audio)
+    video.corp_silence_moments()
+
+    audio = MakeVideo()
+    audio.export_audio("media/background_audio.mp3")
+
+    video.add_audio(audio, volume=0.2)
+
+    video.save_video("created_videos")
 
 
 if __name__ == '__main__':

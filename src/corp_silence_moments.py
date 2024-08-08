@@ -5,12 +5,12 @@ from math import ceil
 class CorpSilenceMoments:
     def __init__(
             self,
-            start_from: int,
-            video_clip: VideoFileClip
+            start_from: int = 0,
+            video_clip: VideoFileClip = VideoFileClip
     ):
         self.segments = []
         self.start_from = start_from
-        self.end_at = ceil(video_clip.duration)
+        self.end_at = ceil(video_clip.audio.duration)
         self.video_clip = video_clip
 
     @staticmethod
