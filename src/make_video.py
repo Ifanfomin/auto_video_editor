@@ -2,28 +2,13 @@ from moviepy.editor import VideoFileClip, AudioFileClip
 
 from src.corp_silence_moments import CorpSilenceMoments
 from src.files_exporter import ExportVideo, ExportAudio
-from src.files_saver import SaveVideo, SaveAudio
+from src.files_saver import Saver
 from src.add_media import AddAudio, AddVideo
+from src.convert import Converter
 
 
 class MakeVideo:
-    def __init__(
-            self,
-            # video_path: str,
-            # audio_path: str,
-            # start_from: int = 0,
-            # end_at: int = -1,
-            # save_path: str = "created_videos",
-            # save_name: str = "",
-            # corp_silence: bool = True
-    ):
-        # self.save_name = save_name
-        # self.save_path = save_path
-        # self.video_path = video_path
-        # self.audio_path = audio_path
-        # self.start_from = start_from
-        # self.end_at = end_at
-        # self.corp_silence = corp_silence
+    def __init__(self):
         self.video_clip = None
         self.audio_clip = None
 
@@ -66,6 +51,15 @@ class MakeVideo:
             end_at
         ).run()
 
+    def convert_to_ext(
+            self,
+            ext: str
+    ):
+        if self.video_clip is not None:
+            self.video_clip = Converter(self.video_clip, ext).video_to_ext()
+        elif self.audio_clip is not None:
+            self.audio_clip = Converter(self.audio_clip, ext).audio_to_ext()
+
     def corp_silence_moments(
             self,
             start_at: int = 0,
@@ -78,12 +72,12 @@ class MakeVideo:
             save_name: str = "",
             save_ext: str = ".mp4"
     ):
-        SaveVideo(
+        Saver(
             save_path,
             save_name,
             self.video_clip,
             save_ext
-        )
+        ).video()
 
     def save_audio(
             self,
@@ -91,9 +85,9 @@ class MakeVideo:
             save_name: str = "",
             save_ext: str = ".mp3"
     ):
-        SaveAudio(
+        Saver(
             save_path,
             save_name,
             self.audio_clip,
             save_ext
-        )
+        ).audio()

@@ -3,10 +3,11 @@ from src.make_video import MakeVideo
 
 def main():
     video = MakeVideo()
-    video.export_video("media/Видео.mp4")
+    video.export_video("media/Video.mp4")
 
     audio = MakeVideo()
     audio.export_audio("media/audio.ogg")
+    audio.convert_to_ext(".mp3")
     video.add_audio(audio)
     video.corp_silence_moments()
 
